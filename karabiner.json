@@ -1,0 +1,24 @@
+{
+    "title": "Dyslexia Helper",
+    "rules": [
+        {
+            "description": "Right Command + C triggers text correction",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "c",
+                        "modifiers": {
+                            "mandatory": ["right_command"]
+                        }
+                    },
+                    "to": [
+                        {
+                            "shell_command": "curl -X POST http://localhost:8000/correct"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
