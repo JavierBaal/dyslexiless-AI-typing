@@ -1,0 +1,101 @@
+2025-02-27 00:21:53 - ERROR - Error al iniciar el listener: Client.__init__() got an unexpected keyword argument 'proxies'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/keyboardlistener.py", line 106, in start_listener
+    listener = KeyboardListener()
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/keyboardlistener.py", line 15, in __init__
+    self.corrector = TextCorrector()
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 14, in __init__
+    self.setup_service()
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 23, in setup_service
+    self.claude = anthropic.Anthropic(api_key=self.config.get('api_key'))
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/anthropic/_client.py", line 111, in __init__
+    super().__init__(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/anthropic/_base_client.py", line 746, in __init__
+    self._client = http_client or httpx.Client(
+TypeError: Client.__init__() got an unexpected keyword argument 'proxies'
+2025-02-27 00:22:07 - INFO - TextCorrector inicializado
+2025-02-27 00:22:07 - INFO - Iniciando KeyboardListener
+2025-02-27 00:22:07 - INFO - DyslexiLess iniciado y monitoreando
+2025-02-27 00:22:07 - INFO - Listener iniciado exitosamente
+2025-02-27 00:24:06 - INFO - Solicitando corrección a Anthropic para: vvse
+2025-02-27 00:24:06 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:24:12 - INFO - Solicitando corrección a Anthropic para: supone
+2025-02-27 00:24:12 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:24:22 - INFO - Solicitando corrección a Anthropic para: qe
+2025-02-27 00:24:22 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:24:37 - INFO - TextCorrector inicializado
+2025-02-27 00:24:37 - INFO - Iniciando KeyboardListener
+2025-02-27 00:24:38 - INFO - DyslexiLess iniciado y monitoreando
+2025-02-27 00:24:38 - INFO - Listener iniciado exitosamente
+2025-02-27 00:25:06 - INFO - Solicitando corrección a Anthropic para: se
+2025-02-27 00:25:06 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:27:33 - INFO - Solicitando corrección a Anthropic para: suponne
+2025-02-27 00:27:33 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:27:37 - INFO - Solicitando corrección a Anthropic para: qe
+2025-02-27 00:27:37 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:27:39 - INFO - Solicitando corrección a Anthropic para: vachola,
+2025-02-27 00:27:39 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:27:40 - INFO - Solicitando corrección a Anthropic para: audita
+2025-02-27 00:27:40 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:27:42 - INFO - Solicitando corrección a Anthropic para: todo
+2025-02-27 00:27:42 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:27:44 - INFO - Solicitando corrección a Anthropic para: a
+2025-02-27 00:27:44 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:34:49 - INFO - Solicitando corrección a Anthropic para: ver
+2025-02-27 00:34:49 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:34:53 - INFO - Solicitando corrección a Anthropic para: que
+2025-02-27 00:34:53 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 00:34:54 - INFO - Solicitando corrección a Anthropic para: tenemos..traducacvpuedes
+2025-02-27 00:34:54 - ERROR - Error en corrección Anthropic: 'Anthropic' object has no attribute 'messages'
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
+    message = self.claude.messages.create(
+AttributeError: 'Anthropic' object has no attribute 'messages'
