@@ -1,92 +1,100 @@
 # DyslexiLess
 
-Asistente de escritura en tiempo real que ayuda a corregir texto mientras escribes, especialmente diseñado para personas con dislexia.
+## Asistente de escritura en tiempo real para personas con dislexia
 
-## Características
+DyslexiLess es una aplicación que corrige automáticamente errores comunes de escritura mientras escribes, especialmente diseñada para personas con dislexia. Funciona en segundo plano y corrige tu texto en cualquier aplicación.
 
-- Corrección de texto en tiempo real mientras escribes
-- Soporte para múltiples servicios de IA:
+![DyslexiLess Logo](resources/icon.png)
+
+## Características Principales
+
+- **Corrección en tiempo real** mientras escribes
+- **Soporte para múltiples servicios de IA**:
   - OpenAI (GPT-4)
   - Anthropic (Claude-3)
   - Mixtral
-- Interfaz gráfica simple para configuración
-- Funciona en segundo plano en todo el sistema
-- Corrección contextual (analiza palabras anteriores y siguientes)
-- Notificaciones del sistema para feedback visual
+  - Modo sin conexión (diccionario local)
+- **Interfaz gráfica intuitiva** para usuarios no técnicos
+- **Funciona en segundo plano** en todo el sistema
+- **Corrección contextual** (analiza palabras anteriores y siguientes)
+- **Notificaciones** para feedback visual
+
+## Instalación Rápida
+
+### Para Usuarios No Técnicos
+
+1. **Descarga el ejecutable**:
+   - Windows: `dist/DyslexiLess.exe`
+   - macOS: `dist/DyslexiLess.app`
+   - Linux: `dist/DyslexiLess`
+
+2. **Haz doble clic** en el ejecutable para iniciar la aplicación
+
+3. **Configura** el servicio de IA que deseas usar (o el modo sin conexión)
+
+4. **¡Comienza a escribir!** La aplicación corregirá automáticamente tus errores
+
+Para instrucciones más detalladas, consulta [README_USUARIOS.md](README_USUARIOS.md).
+
+### Para Desarrolladores
+
+1. **Clona este repositorio**:
+   ```bash
+   git clone https://github.com/tu-usuario/dyslexiless-AI-typing.git
+   cd dyslexiless-AI-typing
+   ```
+
+2. **Instala las dependencias**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Ejecuta la aplicación**:
+   ```bash
+   python improved_gui.py
+   ```
+
+4. **Genera el ejecutable** (opcional):
+   ```bash
+   python build_app.py
+   ```
+
+Para más detalles sobre las actualizaciones recientes, consulta [README_UPDATES.md](README_UPDATES.md).
 
 ## Requisitos
 
-- Python 3.8 o superior
-- macOS (soporte para Windows en desarrollo)
-- Conexión a Internet
-- API key de alguno de los servicios soportados
+- Python 3.8 o superior (solo para desarrollo)
+- macOS, Windows o Linux
+- Conexión a Internet (opcional, para servicios de IA en línea)
+- API key de alguno de los servicios soportados (opcional)
 
-## Instalación
+## Estructura del Proyecto
 
-1. Clonar el repositorio:
-```bash
-git clone https://github.com/tu-usuario/dyslexiless-AI-typing.git
-cd dyslexiless-AI-typing
-``dyslexiless-AI-typing/
-├── main.py              # Punto de entrada y GUI
-├── config_manager.py    # Gestión de configuración
-├── keyboardlistener.py  # Monitor de teclado
-├── text_corrector.py    # Integración con IA
-└── requirements.txt     # Dependencias
-```markdown:%2FUsers%2Fvanguardhive%2FDesktop%2FTRABAJOS%2FSALA-CREATIVA%2Fdyslexiless-AI-typing%2FLICENSE
+```
+dyslexiless-AI-typing/
+├── improved_gui.py       # Interfaz gráfica principal
+├── text_corrector.py     # Motor de corrección de texto
+├── keyboardlistener.py   # Monitor de teclado
+├── config_manager.py     # Gestión de configuración
+├── correction_cache.py   # Sistema de caché
+├── logger_manager.py     # Sistema de registro
+├── build_app.py          # Script para generar ejecutable
+├── install.py            # Script de instalación
+├── test_corrector.py     # Script de prueba avanzado
+├── test_fallback.py      # Script de prueba simple
+├── run_app.py            # Script para ejecutar la aplicación
+├── requirements.txt      # Dependencias
+└── dist/                 # Ejecutables generados
+```
+
+## Licencia
+
 MIT License
 
 Copyright (c) 2024 DyslexiLess
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+## Contacto
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual Environment
-venv/
-ENV/
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Project specific
-config.json
-*.log`
+Para soporte o sugerencias, contacta a:
+- Correo electrónico: soporte@dyslexiless.com
+- Sitio web: [www.dyslexiless.com](https://www.dyslexiless.com)
