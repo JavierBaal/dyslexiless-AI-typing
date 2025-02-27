@@ -1,0 +1,72 @@
+# Dependencias de desarrollo de DyslexiLess
+-r requirements.txt
+
+# Herramientas de desarrollo
+black>=23.0.0
+isort>=5.12.0
+flake8>=6.0.0
+mypy>=1.0.0
+bandit>=1.7.0
+pre-commit>=3.0.0
+
+# Testing avanzado
+pytest-xdist>=3.2.0
+pytest-benchmark>=4.0.0
+pytest-randomly>=3.12.0
+pytest-timeout>=2.1.0
+pytest-env>=0.8.0
+
+# Documentación
+sphinx>=6.0.0
+sphinx-rtd-theme>=1.2.0
+sphinx-autodoc-typehints>=1.22.0
+autodoc>=0.5.0
+
+# Análisis de código
+radon>=5.1.0
+xenon>=0.9.0
+pylint>=2.17.0
+safety>=2.3.0
+
+# Herramientas de CI/CD
+tox>=4.5.0
+coverage>=7.2.0
+codecov>=2.1.0
+
+# Herramientas de empaquetado
+build>=0.10.0
+twine>=4.0.0
+wheel>=0.40.0
+
+# Debugging
+debugpy>=1.6.0
+ipython>=8.12.0
+
+# Herramientas de calidad de código
+prospector>=1.9.0
+pytype>=2023.1.0
+pyre-check>=0.9.0
+vulture>=2.7.0
+semgrep>=1.15.0
+
+# Gestión de entornos virtuales
+virtualenv>=20.21.0
+pipenv>=2023.2.0
+poetry>=1.4.0
+
+# Documentación adicional
+mkdocs>=1.4.0
+mkdocs-material>=9.1.0
+pdoc>=12.1.0
+docformatter>=1.6.0
+
+# Herramientas de rendimiento
+pyinstrument>=4.4.0
+memory-profiler>=0.61.0
+py-spy>=0.3.0
+scalene>=1.5.0
+
+# Herramientas de generación de datos de prueba
+faker>=18.3.0
+hypothesis>=6.75.0
+factory-boy>=3.2.0

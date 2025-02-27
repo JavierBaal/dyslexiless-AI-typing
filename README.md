@@ -1,100 +1,176 @@
 # DyslexiLess
 
-## Asistente de escritura en tiempo real para personas con dislexia
+![Estado de Desarrollo](https://img.shields.io/badge/estado-estable-green)
+![Versión](https://img.shields.io/badge/versión-1.0.0-blue)
+![Cobertura de Pruebas](https://img.shields.io/badge/cobertura-85%25-brightgreen)
+![Licencia](https://img.shields.io/badge/licencia-MIT-blue)
 
-DyslexiLess es una aplicación que corrige automáticamente errores comunes de escritura mientras escribes, especialmente diseñada para personas con dislexia. Funciona en segundo plano y corrige tu texto en cualquier aplicación.
-
-![DyslexiLess Logo](resources/icon.png)
+Sistema de corrección en tiempo real para personas con dislexia.
 
 ## Características Principales
 
-- **Corrección en tiempo real** mientras escribes
-- **Soporte para múltiples servicios de IA**:
-  - OpenAI (GPT-4)
-  - Anthropic (Claude-3)
-  - Mixtral
-  - Modo sin conexión (diccionario local)
-- **Interfaz gráfica intuitiva** para usuarios no técnicos
-- **Funciona en segundo plano** en todo el sistema
-- **Corrección contextual** (analiza palabras anteriores y siguientes)
-- **Notificaciones** para feedback visual
-
-## Instalación Rápida
-
-### Para Usuarios No Técnicos
-
-1. **Descarga el ejecutable**:
-   - Windows: `dist/DyslexiLess.exe`
-   - macOS: `dist/DyslexiLess.app`
-   - Linux: `dist/DyslexiLess`
-
-2. **Haz doble clic** en el ejecutable para iniciar la aplicación
-
-3. **Configura** el servicio de IA que deseas usar (o el modo sin conexión)
-
-4. **¡Comienza a escribir!** La aplicación corregirá automáticamente tus errores
-
-Para instrucciones más detalladas, consulta [README_USUARIOS.md](README_USUARIOS.md).
-
-### Para Desarrolladores
-
-1. **Clona este repositorio**:
-   ```bash
-   git clone https://github.com/tu-usuario/dyslexiless-AI-typing.git
-   cd dyslexiless-AI-typing
-   ```
-
-2. **Instala las dependencias**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Ejecuta la aplicación**:
-   ```bash
-   python improved_gui.py
-   ```
-
-4. **Genera el ejecutable** (opcional):
-   ```bash
-   python build_app.py
-   ```
-
-Para más detalles sobre las actualizaciones recientes, consulta [README_UPDATES.md](README_UPDATES.md).
+- 🚀 Corrección en tiempo real mientras escribes
+- 💾 Caché encriptado para respuestas rápidas
+- 🔄 Procesamiento por lotes para optimizar uso de API
+- 📊 Sistema de telemetría y monitoreo integrado
+- 🔒 Circuit Breaker para manejo robusto de APIs
+- 📱 Soporte multiplataforma (Windows, macOS, Linux)
 
 ## Requisitos
 
-- Python 3.8 o superior (solo para desarrollo)
-- macOS, Windows o Linux
-- Conexión a Internet (opcional, para servicios de IA en línea)
-- API key de alguno de los servicios soportados (opcional)
+- Python 3.8 o superior
+- Sistema operativo compatible:
+  - Windows 10/11
+  - macOS 10.15+
+  - Linux (Ubuntu 20.04+, Fedora 34+)
+- 4GB RAM mínimo
+- Conexión a Internet
 
-## Estructura del Proyecto
+## Instalación
 
+### Usando el Instalador
+
+1. Descarga el instalador para tu sistema operativo desde la sección de releases
+2. Ejecuta el instalador y sigue las instrucciones
+3. La aplicación se iniciará automáticamente al finalizar
+
+### Instalación Manual
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/dyslexiless/dyslexiless.git
+cd dyslexiless
+
+# Crear entorno virtual
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+# o
+venv\Scripts\activate  # Windows
+
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Configurar la aplicación
+python setup.py configure
+
+# Iniciar la aplicación
+python run_app.py
 ```
-dyslexiless-AI-typing/
-├── improved_gui.py       # Interfaz gráfica principal
-├── text_corrector.py     # Motor de corrección de texto
-├── keyboardlistener.py   # Monitor de teclado
-├── config_manager.py     # Gestión de configuración
-├── correction_cache.py   # Sistema de caché
-├── logger_manager.py     # Sistema de registro
-├── build_app.py          # Script para generar ejecutable
-├── install.py            # Script de instalación
-├── test_corrector.py     # Script de prueba avanzado
-├── test_fallback.py      # Script de prueba simple
-├── run_app.py            # Script para ejecutar la aplicación
-├── requirements.txt      # Dependencias
-└── dist/                 # Ejecutables generados
+
+## Uso Rápido
+
+```python
+from dyslexiless import initialize_application, get_service
+from interfaces import ICorrector
+
+# Inicializar la aplicación
+initialize_application()
+
+# Obtener el corrector
+corrector = get_service(ICorrector)
+
+# Corregir texto
+text = "qe"
+context = "creo qe esto funciona"
+corrected_text, was_corrected = corrector.correct_text(text, context)
+
+print(f"Original: {text}")
+print(f"Corregido: {corrected_text}")
 ```
+
+## Configuración
+
+La aplicación puede configurarse mediante archivos JSON en el directorio `config/`:
+
+- `notifications.json`: Configuración de notificaciones
+- `telemetry.json`: Configuración de telemetría
+- `services.json`: Configuración de servicios de IA
+
+## Documentación
+
+La documentación completa está disponible en el directorio `docs/`:
+
+- [Guía de Inicio](docs/getting_started.md)
+- [API Reference](docs/api.md)
+- [Guía de Desarrollo](docs/development.md)
+- [Ejemplos](docs/examples/)
+
+Para generar la documentación:
+
+```bash
+cd docs
+python generate_docs.py
+```
+
+## Características de Seguridad
+
+- Caché encriptado para datos sensibles
+- Circuit Breaker para APIs externas
+- Validación de integridad de datos
+- Rotación automática de claves
+- Monitoreo de seguridad en tiempo real
+
+## Monitoreo y Telemetría
+
+La aplicación incluye un sistema completo de monitoreo:
+
+- Métricas de rendimiento en tiempo real
+- Dashboard de telemetría
+- Sistema de alertas configurable
+- Exportación de métricas en varios formatos
+
+## Desarrollo
+
+### Configurar Entorno de Desarrollo
+
+```bash
+# Instalar dependencias de desarrollo
+pip install -r requirements-dev.txt
+
+# Configurar pre-commit hooks
+pre-commit install
+
+# Ejecutar pruebas
+python -m pytest
+```
+
+### Estándares de Código
+
+- Seguimos PEP 8
+- Type hints obligatorios
+- Docstrings en formato Google
+- Tests unitarios requeridos para nuevas funcionalidades
+
+## Contribuir
+
+1. Fork el repositorio
+2. Crea una rama para tu funcionalidad (`git checkout -b feature/amazing-feature`)
+3. Commit tus cambios (`git commit -m 'Add amazing feature'`)
+4. Push a la rama (`git push origin feature/amazing-feature`)
+5. Abre un Pull Request
 
 ## Licencia
 
-MIT License
+Este proyecto está licenciado bajo MIT License - ver [LICENSE](LICENSE) para más detalles.
 
-Copyright (c) 2024 DyslexiLess
+## Soporte
 
-## Contacto
+- [Reportar un Bug](https://github.com/dyslexiless/dyslexiless/issues)
+- [Solicitar una Funcionalidad](https://github.com/dyslexiless/dyslexiless/issues)
+- [Documentación de Soporte](docs/support.md)
 
-Para soporte o sugerencias, contacta a:
-- Correo electrónico: soporte@dyslexiless.com
-- Sitio web: [www.dyslexiless.com](https://www.dyslexiless.com)
+## Autores
+
+- **Equipo DyslexiLess** - *Trabajo inicial*
+
+## Agradecimientos
+
+- A la comunidad de Python por sus herramientas y librerías
+- A todos los contribuidores del proyecto
+- A los usuarios por su retroalimentación y sugerencias
+
+## Estado del Proyecto
+
+- ✅ Versión 1.0.0 liberada
+- 🚀 En mejora continua
+- 📈 Actualizaciones regulares

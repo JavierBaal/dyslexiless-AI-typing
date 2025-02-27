@@ -1,0 +1,142 @@
+{
+    "enabled": true,
+    "collection_interval": 60,
+    "retention_period_days": 7,
+    "storage": {
+        "type": "file",
+        "path": "data/metrics",
+        "format": "json",
+        "compression": true,
+        "max_file_size_mb": 10,
+        "rotation_count": 5
+    },
+    "metrics": [
+        {
+            "name": "cpu_usage",
+            "description": "Uso de CPU del proceso",
+            "unit": "%",
+            "warning_threshold": 70,
+            "alert_threshold": 90,
+            "sampling_interval": 60.0,
+            "retention_days": 7,
+            "aggregation": "avg"
+        },
+        {
+            "name": "memory_usage",
+            "description": "Uso de memoria del proceso",
+            "unit": "MB",
+            "warning_threshold": 1000,
+            "alert_threshold": 2000,
+            "sampling_interval": 60.0,
+            "retention_days": 7,
+            "aggregation": "avg"
+        },
+        {
+            "name": "correction_latency",
+            "description": "Tiempo de respuesta para correcciones",
+            "unit": "ms",
+            "warning_threshold": 500,
+            "alert_threshold": 1000,
+            "sampling_interval": 1.0,
+            "retention_days": 3,
+            "aggregation": "avg"
+        },
+        {
+            "name": "corrections_per_minute",
+            "description": "Número de correcciones por minuto",
+            "unit": "corrections/min",
+            "warning_threshold": null,
+            "alert_threshold": null,
+            "sampling_interval": 60.0,
+            "retention_days": 7,
+            "aggregation": "sum"
+        },
+        {
+            "name": "api_success_rate",
+            "description": "Tasa de éxito de llamadas a API",
+            "unit": "%",
+            "warning_threshold": 95,
+            "alert_threshold": 90,
+            "sampling_interval": 300.0,
+            "retention_days": 30,
+            "aggregation": "avg"
+        },
+        {
+            "name": "batch_size",
+            "description": "Tamaño promedio de lotes de corrección",
+            "unit": "items",
+            "warning_threshold": null,
+            "alert_threshold": null,
+            "sampling_interval": 60.0,
+            "retention_days": 7,
+            "aggregation": "avg"
+        },
+        {
+            "name": "cache_hit_rate",
+            "description": "Tasa de aciertos en caché",
+            "unit": "%",
+            "warning_threshold": 50,
+            "alert_threshold": 30,
+            "sampling_interval": 300.0,
+            "retention_days": 7,
+            "aggregation": "avg"
+        }
+    ],
+    "dashboards": [
+        {
+            "name": "Performance Overview",
+            "refresh_interval": 5,
+            "metrics": ["cpu_usage", "memory_usage", "correction_latency"],
+            "layout": "grid",
+            "timespan": "1h"
+        },
+        {
+            "name": "API Health",
+            "refresh_interval": 30,
+            "metrics": ["api_success_rate", "corrections_per_minute", "batch_size"],
+            "layout": "grid",
+            "timespan": "24h"
+        },
+        {
+            "name": "System Health",
+            "refresh_interval": 60,
+            "metrics": ["cache_hit_rate", "cpu_usage", "memory_usage"],
+            "layout": "grid",
+            "timespan": "7d"
+        }
+    ],
+    "alerts": {
+        "channels": {
+            "email": {
+                "enabled": false,
+                "recipients": []
+            },
+            "log": {
+                "enabled": true,
+                "level": "warning"
+            },
+            "system": {
+                "enabled": true,
+                "notification_type": "toast"
+            }
+        },
+        "throttling": {
+            "max_alerts_per_hour": 10,
+            "min_interval_between_alerts": 300
+        },
+        "aggregation_window": 300,
+        "recovery_threshold": 3
+    },
+    "export": {
+        "enabled": true,
+        "formats": ["json", "csv"],
+        "schedule": {
+            "interval": "1d",
+            "time": "00:00"
+        },
+        "retention": {
+            "days": 90,
+            "max_size_mb": 1000
+        }
+    }
+}

@@ -1,0 +1,110 @@
+# DyslexiLess - Documentación API
+
+> Generado automáticamente el {{ generation_date }}
+
+## Índice
+
+- [Introducción](#introducción)
+- [Módulos](#módulos)
+- [API Reference](#api-reference)
+- [Ejemplos](#ejemplos)
+
+## Introducción
+
+DyslexiLess es una aplicación para asistir a personas con dislexia mediante la corrección en tiempo real de texto mientras escriben.
+
+## Módulos
+
+{% for name, module in modules.items() %}
+### {{ name }}
+
+{{ module.docstring }}
+
+{% if module.classes %}
+#### Clases
+
+{% for class in module.classes %}
+- [{{ class.name }}](#{{ name }}-{{ class.name }})
+{% endfor %}
+{% endif %}
+
+{% if module.functions %}
+#### Funciones
+
+{% for function in module.functions %}
+- [{{ function.name }}](#{{ name }}-{{ function.name }})
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+
+## API Reference
+
+{% for module_name, module in modules.items() %}
+### Módulo `{{ module_name }}`
+
+{{ module.docstring }}
+
+{% for class in module.classes %}
+#### Clase `{{ class.name }}`
+
+{{ class.docstring }}
+
+{% if class.bases %}
+**Hereda de**: {{ class.bases|join(', ') }}
+{% endif %}
+
+{% if class.methods %}
+##### Métodos
+
+{% for method in class.methods %}
+###### `{{ method.name }}({% for arg in method.args %}{{ arg.name }}{% if arg.annotation %}: {{ arg.annotation }}{% endif %}{% if not loop.last %}, {% endif %}{% endfor %}){% if method.returns %} -> {{ method.returns }}{% endif %}`
+
+{{ method.docstring }}
+
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+
+{% for function in module.functions %}
+#### Función `{{ function.name }}`
+
+{{ function.docstring }}
+
+**Argumentos**:
+{% for arg in function.args %}
+- `{{ arg.name }}{% if arg.annotation %}: {{ arg.annotation }}{% endif %}`
+{% endfor %}
+
+{% if function.returns %}
+**Retorna**: `{{ function.returns }}`
+{% endif %}
+
+{% endfor %}
+
+{% endfor %}
+
+## Ejemplos
+
+{% for name, example in examples.items() %}
+### {{ name }}
+
+{{ example.description }}
+
+```python
+{{ example.code }}
+```
+
+{% endfor %}
+
+## Notas de Implementación
+
+- La aplicación utiliza inyección de dependencias para una mejor modularidad.
+- Se implementa el patrón Circuit Breaker para manejo robusto de APIs externas.
+- El sistema de caché encriptado protege la información sensible.
+- La telemetría y monitoreo permiten supervisar el rendimiento en tiempo real.
+
+## Licencia
+
+MIT License - Copyright (c) 2025 DyslexiLess Team

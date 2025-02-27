@@ -1,0 +1,71 @@
+{
+    "enabled": true,
+    "sound_enabled": true,
+    "duration": 3,
+    "max_queue": 10,
+    "min_interval": 0.5,
+    "position": "top-right",
+    "log_notifications": true,
+    "notification_history": 100,
+    "styles": {
+        "info": {
+            "icon": "ℹ️",
+            "sound": "notification.wav",
+            "color": "#2196F3"
+        },
+        "warning": {
+            "icon": "⚠️",
+            "sound": "alert.wav",
+            "color": "#FFC107"
+        },
+        "error": {
+            "icon": "❌",
+            "sound": "error.wav",
+            "color": "#F44336"
+        },
+        "success": {
+            "icon": "✅",
+            "sound": "success.wav",
+            "color": "#4CAF50"
+        }
+    },
+    "platforms": {
+        "windows": {
+            "use_native": true,
+            "fallback_to_balloon": true,
+            "toast_duration": 5
+        },
+        "macos": {
+            "use_native": true,
+            "sound_enabled": true,
+            "app_icon": "assets/icon.icns"
+        },
+        "linux": {
+            "use_native": true,
+            "fallback_to_notify_send": true,
+            "use_dbus": true
+        }
+    },
+    "queue_settings": {
+        "priority_levels": {
+            "low": 1,
+            "normal": 2,
+            "high": 3,
+            "urgent": 4
+        },
+        "timeout": {
+            "low": 10,
+            "normal": 5,
+            "high": 3,
+            "urgent": 1
+        }
+    },
+    "advanced": {
+        "batch_notifications": true,
+        "batch_size": 3,
+        "batch_timeout": 1.0,
+        "cleanup_interval": 3600,
+        "max_retries": 3,
+        "retry_delay": 0.5
+    }
+}

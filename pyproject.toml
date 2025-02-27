@@ -1,0 +1,139 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "pip>=21.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+# A regex preceded with ^/ will apply only to files and directories
+# in the root of the project.
+^/docs/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+line_length = 88
+skip_gitignore = true
+skip = ["docs/"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+show_error_codes = true
+ignore_missing_imports = false
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --cov=dyslexiless --cov-report=term-missing"
+testpaths = [
+    "tests",
+]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]
+
+[tool.coverage.run]
+source = ["dyslexiless"]
+branch = true
+concurrency = ["thread", "multiprocessing"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "class .*\\bProtocol\\):",
+]
+ignore_errors = true
+fail_under = 85
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+[tool.bandit]
+exclude_dirs = ["tests", "docs"]
+tests = ["B201", "B301"]
+skips = ["B101", "B601"]
+
+[tool.pylint]
+max-line-length = 88
+disable = [
+    "C0111",  # missing-docstring
+    "R0903",  # too-few-public-methods
+    "C0103",  # invalid-name
+]
+ignore = ["CVS", ".git", ".eggs", "*.egg", "build", "dist"]
+ignore-patterns = ["^\\.#"]
+persistent = "yes"
+load-plugins = [
+    "pylint.extensions.docparams",
+    "pylint.extensions.docstyle",
+    "pylint.extensions.typing",
+]
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+envlist = py38, py39, py310, py311
+isolated_build = True
+
+[testenv]
+deps =
+    -r requirements-dev.txt
+commands =
+    pytest {posargs:tests}
+    black --check .
+    isort --check-only --diff .
+    mypy .
+"""
+
+[tool.poetry]
+name = "dyslexiless"
+version = "1.0.0"
+description = "Sistema de corrección en tiempo real para personas con dislexia"
+authors = ["DyslexiLess Team <contact@dyslexiless.org>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/dyslexiless/dyslexiless"
+repository = "https://github.com/dyslexiless/dyslexiless"
+documentation = "https://dyslexiless.readthedocs.io"
+keywords = ["dislexia", "corrección", "texto", "accesibilidad"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: End Users/Desktop",
+    "Topic :: Text Processing :: Linguistic",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+    "Environment :: X11 Applications :: Qt",
+    "Natural Language :: Spanish",
+]

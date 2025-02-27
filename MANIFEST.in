@@ -1,0 +1,60 @@
+# Archivos de documentación
+include README.md
+include LICENSE
+include docs/README.md
+include docs/getting_started.md
+include docs/development.md
+include docs/support.md
+recursive-include docs/examples *.py
+recursive-include docs/templates *.j2
+recursive-include docs/static *
+
+# Archivos de configuración
+include requirements.txt
+include requirements-dev.txt
+include setup.py
+include pyproject.toml
+include MANIFEST.in
+include config/*.json
+include config/__init__.py
+
+# Recursos
+recursive-include resources *
+recursive-include dyslexiless/resources *
+
+# Archivos de test
+recursive-include tests *.py
+recursive-include test_data *.json
+
+# Scripts y herramientas
+include scripts/*.py
+include scripts/*.sh
+include tools/*.py
+
+# Archivos de instalación
+include installer.iss
+include install.py
+
+# Otros archivos importantes
+include .gitignore
+include .pre-commit-config.yaml
+include tox.ini
+include Makefile
+
+# Excluir archivos innecesarios
+global-exclude *.py[cod]
+global-exclude __pycache__
+global-exclude *.so
+global-exclude .DS_Store
+global-exclude *.dylib
+global-exclude *.c
+global-exclude *.h
+global-exclude *.o
+global-exclude .git
+global-exclude .gitignore
+global-exclude .tox
+global-exclude .coverage
+global-exclude htmlcov
+global-exclude *.log
+global-exclude .pytest_cache
+global-exclude .hypothesis

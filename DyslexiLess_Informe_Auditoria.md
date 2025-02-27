@@ -6,7 +6,12 @@ DyslexiLess es una aplicación de escritorio diseñada para ayudar a personas co
 
 ## 2. Arquitectura del Sistema
 
-### 2.1 Componentes Principales
+### 2.1 Distribución y Despliegue
+- **Instalador**: Script básico de Python que requiere conocimientos técnicos
+- **Ejecutable**: No disponible actualmente
+- **Actualizaciones**: Proceso manual
+
+### 2.2 Componentes Principales
 - **main.py**: Punto de entrada de la aplicación y gestión de la interfaz de configuración
 - **keyboardlistener.py**: Monitor de entrada de teclado y gestor de correcciones
 - **text_corrector.py**: Motor de corrección con múltiples proveedores de IA
@@ -18,7 +23,13 @@ DyslexiLess es una aplicación de escritorio diseñada para ayudar a personas co
 - ✅ Implementación efectiva del patrón Strategy para servicios de corrección
 - ✅ Sistema de caché inteligente con TTL y límite de tamaño
 
-### 2.3 Áreas de Mejora
+### 2.3 Áreas de Mejora Críticas
+- ⚠️ Falta de instalador gráfico para usuarios no técnicos
+- ⚠️ Ausencia de ejecutables autocontenidos multiplataforma
+- ⚠️ No hay sistema de actualización automática
+- ⚠️ Falta firma digital en ejecutables
+
+### 2.4 Áreas de Mejora Generales
 - ⚠️ Acoplamiento moderado entre el listener de teclado y el corrector
 - ⚠️ Falta de abstracción para las notificaciones del sistema
 - ⚠️ Configuración centralizada pero con posible duplicación

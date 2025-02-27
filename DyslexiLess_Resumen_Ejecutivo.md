@@ -23,7 +23,13 @@ DyslexiLess es una aplicación innovadora diseñada para asistir a personas con 
 
 ## ⚠️ Áreas de Mejora Críticas
 
-1. **Alta Prioridad**
+1. **Prioridad Inmediata**
+   - Crear instalador gráfico multiplataforma
+   - Generar ejecutables autocontenidos
+   - Implementar actualizador automático
+   - Añadir firma digital de ejecutables
+
+2. **Alta Prioridad**
    - Implementación de circuit breaker
    - Optimización de memoria
    - Seguridad del caché
@@ -60,6 +66,7 @@ DyslexiLess es una aplicación innovadora diseñada para asistir a personas con 
 - 1 DevOps (tiempo parcial)
 
 ### Tiempo
+- Fase 0: 2-3 semanas (Accesibilidad)
 - Fase 1: 4-6 semanas
 - Fase 2: 6-8 semanas
 - Fase 3: 4-6 semanas

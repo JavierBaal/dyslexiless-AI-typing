@@ -1,458 +1,388 @@
 #!/usr/bin/env python3
 """
 Interfaz gráfica mejorada para DyslexiLess.
-Diseñada para ser intuitiva y fácil de usar para usuarios no técnicos.
+Esta versión incluye una interfaz más amigable y asistente de configuración.
 """
 
 import sys
 import os
-import json
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-    QLabel, QComboBox, QLineEdit, QPushButton, QCheckBox, 
-    QSystemTrayIcon, QMenu, QMessageBox, QTabWidget, QGroupBox,
-    QRadioButton, QButtonGroup, QSpacerItem, QSizePolicy, QFrame
+    QPushButton, QLabel, QLineEdit, QComboBox, QSystemTrayIcon,
+    QMenu, QMessageBox, QWizard, QWizardPage, QCheckBox, QProgressBar
 )
-from PyQt6.QtCore import Qt, QSize, QTimer
-from PyQt6.QtGui import QIcon, QFont, QPixmap
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtGui import QIcon, QPixmap
 import keyboardlistener
 import config_manager
-from text_corrector import TextCorrector
+from logger_manager import logger
 
-# Ruta para recursos
-RESOURCES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "resources")
-os.makedirs(RESOURCES_DIR, exist_ok=True)
-
-# Crear un icono simple si no existe
-ICON_PATH = os.path.join(RESOURCES_DIR, "icon.png")
-if not os.path.exists(ICON_PATH):
-    # Usaremos un icono de texto simple si no hay un archivo de icono
-    pass
-
-class StatusWidget(QWidget):
-    """Widget que muestra el estado actual del corrector."""
+class ConfigWizard(QWizard):
+    """Asistente de configuración inicial."""
     
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setup_ui()
-        self.correction_count = 0
-        self.word_count = 0
+        self.setWindowTitle("Asistente de Configuración DyslexiLess")
+        self.setWizardStyle(QWizard.WizardStyle.ModernStyle)
         
-    def setup_ui(self):
-        layout = QVBoxLayout(self)
+        # Cargar icono si existe
+        icon_path = os.path.join("resources", "icon.png")
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
         
-        # Título
-        title = QLabel("Estado del Corrector")
-        title.setFont(QFont("Arial", 14, QFont.Weight.Bold))
-        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(title)
+        # Añadir páginas
+        self.addPage(WelcomePage())
+        self.addPage(ServiceSelectionPage())
+        self.addPage(APIConfigPage())
+        self.addPage(SettingsPage())
+        self.addPage(CompletionPage())
         
-        # Separador
-        line = QFrame()
-        line.setFrameShape(QFrame.Shape.HLine)
-        line.setFrameShadow(QFrame.Shadow.Sunken)
-        layout.addWidget(line)
-        
-        # Estado
-        self.status_label = QLabel("Estado: Inactivo")
-        self.status_label.setFont(QFont("Arial", 12))
-        layout.addWidget(self.status_label)
-        
-        # Servicio
-        self.service_label = QLabel("Servicio: Ninguno")
-        self.service_label.setFont(QFont("Arial", 12))
-        layout.addWidget(self.service_label)
-        
-        # Estadísticas
-        stats_box = QGroupBox("Estadísticas")
-        stats_layout = QVBoxLayout()
-        
-        self.corrections_label = QLabel("Correcciones: 0")
-        self.words_label = QLabel("Palabras procesadas: 0")
-        self.rate_label = QLabel("Tasa de corrección: 0%")
-        
-        stats_layout.addWidget(self.corrections_label)
-        stats_layout.addWidget(self.words_label)
-        stats_layout.addWidget(self.rate_label)
-        
-        stats_box.setLayout(stats_layout)
-        layout.addWidget(stats_box)
-        
-        # Espacio flexible
-        layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding))
-        
-        # Botón para detener/iniciar
-        self.toggle_button = QPushButton("Iniciar Corrector")
-        self.toggle_button.setFont(QFont("Arial", 12))
-        self.toggle_button.setMinimumHeight(40)
-        layout.addWidget(self.toggle_button)
-    
-    def update_status(self, is_active, service=None):
-        """Actualiza el estado mostrado."""
-        if is_active:
-            self.status_label.setText("Estado: Activo")
-            self.toggle_button.setText("Detener Corrector")
-            if service:
-                self.service_label.setText(f"Servicio: {service}")
-        else:
-            self.status_label.setText("Estado: Inactivo")
-            self.toggle_button.setText("Iniciar Corrector")
-            self.service_label.setText("Servicio: Ninguno")
-    
-    def update_stats(self, corrections, words):
-        """Actualiza las estadísticas mostradas."""
-        self.correction_count = corrections
-        self.word_count = words
-        
-        self.corrections_label.setText(f"Correcciones: {corrections}")
-        self.words_label.setText(f"Palabras procesadas: {words}")
-        
-        rate = (corrections / words * 100) if words > 0 else 0
-        self.rate_label.setText(f"Tasa de corrección: {rate:.1f}%")
+        self.setMinimumWidth(600)
+        self.setMinimumHeight(400)
 
-class ConfigWidget(QWidget):
-    """Widget para configurar el corrector."""
-    
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setup_ui()
-        self.load_config()
-        
-    def setup_ui(self):
-        layout = QVBoxLayout(self)
-        
-        # Título
-        title = QLabel("Configuración")
-        title.setFont(QFont("Arial", 14, QFont.Weight.Bold))
-        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(title)
-        
-        # Separador
-        line = QFrame()
-        line.setFrameShape(QFrame.Shape.HLine)
-        line.setFrameShadow(QFrame.Shadow.Sunken)
-        layout.addWidget(line)
-        
-        # Selector de servicio
-        service_group = QGroupBox("Servicio de IA")
-        service_layout = QVBoxLayout()
-        
-        self.service_selector = QComboBox()
-        self.service_selector.addItems(["OpenAI", "Anthropic", "Mixtral", "Modo sin conexión"])
-        self.service_selector.currentIndexChanged.connect(self.on_service_changed)
-        
-        service_layout.addWidget(QLabel("Selecciona el servicio de IA:"))
-        service_layout.addWidget(self.service_selector)
-        
-        # Descripción del servicio
-        self.service_description = QLabel("OpenAI proporciona correcciones de alta calidad usando GPT-4.")
-        self.service_description.setWordWrap(True)
-        service_layout.addWidget(self.service_description)
-        
-        service_group.setLayout(service_layout)
-        layout.addWidget(service_group)
-        
-        # Campo de API Key
-        self.api_key_group = QGroupBox("Clave API")
-        api_key_layout = QVBoxLayout()
-        
-        self.api_key_input = QLineEdit()
-        self.api_key_input.setPlaceholderText("Ingresa tu clave API aquí")
-        
-        api_key_layout.addWidget(QLabel("Clave API:"))
-        api_key_layout.addWidget(self.api_key_input)
-        api_key_layout.addWidget(QLabel("La clave API es necesaria para usar los servicios de IA."))
-        
-        self.api_key_group.setLayout(api_key_layout)
-        layout.addWidget(self.api_key_group)
-        
-        # Opciones adicionales
-        options_group = QGroupBox("Opciones")
-        options_layout = QVBoxLayout()
-        
-        self.start_with_system = QCheckBox("Iniciar automáticamente con el sistema")
-        self.show_notifications = QCheckBox("Mostrar notificaciones de corrección")
-        self.show_notifications.setChecked(True)
-        
-        options_layout.addWidget(self.start_with_system)
-        options_layout.addWidget(self.show_notifications)
-        
-        options_group.setLayout(options_layout)
-        layout.addWidget(options_group)
-        
-        # Espacio flexible
-        layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding))
-        
-        # Botón de guardar
-        self.save_button = QPushButton("Guardar Configuración")
-        self.save_button.setFont(QFont("Arial", 12))
-        self.save_button.setMinimumHeight(40)
-        self.save_button.clicked.connect(self.save_config)
-        layout.addWidget(self.save_button)
-    
-    def on_service_changed(self, index):
-        """Actualiza la descripción del servicio y muestra/oculta el campo de API key."""
-        service = self.service_selector.currentText()
-        
-        if service == "OpenAI":
-            self.service_description.setText("OpenAI proporciona correcciones de alta calidad usando GPT-4.")
-            self.api_key_group.setVisible(True)
-        elif service == "Anthropic":
-            self.service_description.setText("Anthropic Claude ofrece correcciones precisas con comprensión contextual.")
-            self.api_key_group.setVisible(True)
-        elif service == "Mixtral":
-            self.service_description.setText("Mixtral es un modelo de código abierto con buen rendimiento.")
-            self.api_key_group.setVisible(True)
-        elif service == "Modo sin conexión":
-            self.service_description.setText("Modo sin conexión usa un diccionario local para correcciones básicas sin internet.")
-            self.api_key_group.setVisible(False)
-    
-    def load_config(self):
-        """Carga la configuración existente."""
-        if config_manager.config_exists():
-            config = config_manager.load_config()
-            
-            # Servicio
-            service = config.get('service', 'OpenAI')
-            index = self.service_selector.findText(service)
-            if index >= 0:
-                self.service_selector.setCurrentIndex(index)
-            
-            # API Key
-            self.api_key_input.setText(config.get('api_key', ''))
-            
-            # Opciones
-            self.start_with_system.setChecked(config.get('start_with_system', False))
-            self.show_notifications.setChecked(config.get('show_notifications', True))
-    
-    def save_config(self):
-        """Guarda la configuración."""
-        service = self.service_selector.currentText()
-        
-        config = {
-            'service': "InvalidService" if service == "Modo sin conexión" else service,
-            'api_key': self.api_key_input.text() if service != "Modo sin conexión" else "invalid_key",
-            'start_with_system': self.start_with_system.isChecked(),
-            'show_notifications': self.show_notifications.isChecked()
-        }
-        
-        config_manager.save_config(config)
-        QMessageBox.information(self, "Configuración Guardada", 
-                               "La configuración se ha guardado correctamente.")
-
-class HelpWidget(QWidget):
-    """Widget que muestra ayuda e información sobre la aplicación."""
-    
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setup_ui()
-        
-    def setup_ui(self):
-        layout = QVBoxLayout(self)
-        
-        # Título
-        title = QLabel("Ayuda y Soporte")
-        title.setFont(QFont("Arial", 14, QFont.Weight.Bold))
-        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(title)
-        
-        # Separador
-        line = QFrame()
-        line.setFrameShape(QFrame.Shape.HLine)
-        line.setFrameShadow(QFrame.Shadow.Sunken)
-        layout.addWidget(line)
-        
-        # Contenido de ayuda
-        help_text = """
-<h3>¿Qué es DyslexiLess?</h3>
-<p>DyslexiLess es un asistente de escritura en tiempo real diseñado para ayudar a personas con dislexia. Corrige automáticamente errores comunes mientras escribes en cualquier aplicación.</p>
-
-<h3>¿Cómo funciona?</h3>
-<p>La aplicación monitorea tu escritura y corrige automáticamente errores comunes de dislexia. Funciona en segundo plano y no interfiere con tu flujo de trabajo normal.</p>
-
-<h3>Configuración</h3>
-<p><b>1. Selecciona un servicio de IA</b> - Elige entre OpenAI, Anthropic, Mixtral o el modo sin conexión.</p>
-<p><b>2. Ingresa tu clave API</b> - Si elegiste un servicio en línea, necesitarás una clave API.</p>
-<p><b>3. Guarda la configuración</b> - Haz clic en "Guardar Configuración".</p>
-<p><b>4. Inicia el corrector</b> - Ve a la pestaña "Estado" y haz clic en "Iniciar Corrector".</p>
-
-<h3>Obtener claves API</h3>
-<p><b>OpenAI:</b> Visita <a href="https://platform.openai.com">platform.openai.com</a></p>
-<p><b>Anthropic:</b> Visita <a href="https://console.anthropic.com">console.anthropic.com</a></p>
-<p><b>Mixtral:</b> Visita <a href="https://api.together.xyz">api.together.xyz</a></p>
-
-<h3>Modo sin conexión</h3>
-<p>Si no tienes una clave API o prefieres no usar servicios en línea, puedes usar el modo sin conexión. Este modo utiliza un diccionario local para corregir errores comunes de dislexia.</p>
-"""
-        help_label = QLabel(help_text)
-        help_label.setWordWrap(True)
-        help_label.setTextFormat(Qt.TextFormat.RichText)
-        help_label.setOpenExternalLinks(True)
-        
-        layout.addWidget(help_label)
-        
-        # Espacio flexible
-        layout.addSpacerItem(QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding))
-        
-        # Información de versión
-        version_label = QLabel("DyslexiLess v1.0.0")
-        version_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(version_label)
-
-class MainWindow(QMainWindow):
-    """Ventana principal de la aplicación DyslexiLess."""
+class WelcomePage(QWizardPage):
+    """Página de bienvenida del asistente."""
     
     def __init__(self):
         super().__init__()
-        self.correction_service = None
-        self.setup_ui()
-        self.setup_tray()
+        self.setTitle("Bienvenido a DyslexiLess")
+        self.setSubTitle("Este asistente te ayudará a configurar DyslexiLess para su primer uso.")
         
-    def setup_ui(self):
-        self.setWindowTitle("DyslexiLess - Asistente de Escritura")
-        self.setMinimumSize(600, 500)
+        layout = QVBoxLayout()
         
-        # Widget central con pestañas
+        # Agregar logo si existe
+        icon_path = os.path.join("resources", "icon.png")
+        if os.path.exists(icon_path):
+            logo = QLabel()
+            pixmap = QPixmap(icon_path)
+            logo.setPixmap(pixmap.scaled(128, 128, Qt.AspectRatioMode.KeepAspectRatio))
+            layout.addWidget(logo, alignment=Qt.AlignmentFlag.AlignCenter)
+        
+        # Texto de bienvenida
+        welcome_text = QLabel(
+            "DyslexiLess es tu asistente personal de escritura que te ayuda "
+            "a corregir errores comunes de dislexia en tiempo real.\n\n"
+            "Este asistente te guiará a través de los siguientes pasos:\n"
+            "• Selección del servicio de IA\n"
+            "• Configuración de la API\n"
+            "• Personalización de ajustes\n\n"
+            "Haz clic en 'Siguiente' para comenzar."
+        )
+        welcome_text.setWordWrap(True)
+        layout.addWidget(welcome_text)
+        
+        self.setLayout(layout)
+
+class ServiceSelectionPage(QWizardPage):
+    """Página para seleccionar el servicio de IA."""
+    
+    def __init__(self):
+        super().__init__()
+        self.setTitle("Selección de Servicio")
+        self.setSubTitle("Elige el servicio de IA que deseas utilizar.")
+        
+        layout = QVBoxLayout()
+        
+        # Selector de servicio
+        self.service_combo = QComboBox()
+        self.service_combo.addItems(["OpenAI (Recomendado)", "Anthropic", "Mixtral (Local)"])
+        layout.addWidget(QLabel("Servicio de IA:"))
+        layout.addWidget(self.service_combo)
+        
+        # Explicación de cada servicio
+        self.service_info = QLabel()
+        self.service_info.setWordWrap(True)
+        layout.addWidget(self.service_info)
+        
+        self.service_combo.currentIndexChanged.connect(self.update_service_info)
+        self.update_service_info()
+        
+        self.setLayout(layout)
+        
+        # Registrar campo
+        self.registerField("service", self.service_combo)
+    
+    def update_service_info(self):
+        info = {
+            0: "OpenAI ofrece el mejor balance entre precisión y velocidad. Recomendado para la mayoría de usuarios.",
+            1: "Anthropic Claude es muy preciso pero puede ser más lento. Bueno para textos complejos.",
+            2: "Mixtral es una opción local que no requiere conexión a internet, pero puede ser menos precisa."
+        }
+        self.service_info.setText(info[self.service_combo.currentIndex()])
+
+class APIConfigPage(QWizardPage):
+    """Página para configurar la API key."""
+    
+    def __init__(self):
+        super().__init__()
+        self.setTitle("Configuración de API")
+        self.setSubTitle("Introduce tu clave de API para el servicio seleccionado.")
+        
+        layout = QVBoxLayout()
+        
+        # Campo de API key
+        self.api_key = QLineEdit()
+        self.api_key.setPlaceholderText("Introduce tu API key aquí")
+        self.api_key.setEchoMode(QLineEdit.EchoMode.Password)
+        layout.addWidget(QLabel("API Key:"))
+        layout.addWidget(self.api_key)
+        
+        # Botón para mostrar/ocultar API key
+        self.show_key = QCheckBox("Mostrar API key")
+        self.show_key.stateChanged.connect(self.toggle_key_visibility)
+        layout.addWidget(self.show_key)
+        
+        # Instrucciones
+        instructions = QLabel(
+            "Para obtener tu API key:\n\n"
+            "1. Ve al sitio web del servicio seleccionado\n"
+            "2. Crea una cuenta o inicia sesión\n"
+            "3. Navega a la sección de API keys\n"
+            "4. Genera una nueva key y cópiala aquí"
+        )
+        instructions.setWordWrap(True)
+        layout.addWidget(instructions)
+        
+        self.setLayout(layout)
+        
+        # Registrar campo
+        self.registerField("api_key*", self.api_key)
+    
+    def toggle_key_visibility(self, state):
+        self.api_key.setEchoMode(
+            QLineEdit.EchoMode.Normal if state 
+            else QLineEdit.EchoMode.Password
+        )
+
+class SettingsPage(QWizardPage):
+    """Página para configurar ajustes adicionales."""
+    
+    def __init__(self):
+        super().__init__()
+        self.setTitle("Ajustes Adicionales")
+        self.setSubTitle("Personaliza el comportamiento de DyslexiLess.")
+        
+        layout = QVBoxLayout()
+        
+        # Iniciar con el sistema
+        self.autostart = QCheckBox("Iniciar DyslexiLess automáticamente con el sistema")
+        self.autostart.setChecked(True)
+        layout.addWidget(self.autostart)
+        
+        # Mostrar notificaciones
+        self.notifications = QCheckBox("Mostrar notificaciones de corrección")
+        self.notifications.setChecked(True)
+        layout.addWidget(self.notifications)
+        
+        # Modo silencioso
+        self.quiet_mode = QCheckBox("Modo silencioso (sin sonidos)")
+        layout.addWidget(self.quiet_mode)
+        
+        # Corrección agresiva
+        self.aggressive = QCheckBox("Corrección agresiva (corregir más errores)")
+        layout.addWidget(self.aggressive)
+        
+        self.setLayout(layout)
+        
+        # Registrar campos
+        self.registerField("autostart", self.autostart)
+        self.registerField("notifications", self.notifications)
+        self.registerField("quiet_mode", self.quiet_mode)
+        self.registerField("aggressive", self.aggressive)
+
+class CompletionPage(QWizardPage):
+    """Página final del asistente."""
+    
+    def __init__(self):
+        super().__init__()
+        self.setTitle("Configuración Completada")
+        self.setSubTitle("DyslexiLess está listo para usar.")
+        
+        layout = QVBoxLayout()
+        
+        # Mensaje de finalización
+        completion_text = QLabel(
+            "¡Felicidades! Has completado la configuración de DyslexiLess.\n\n"
+            "• La aplicación se iniciará automáticamente\n"
+            "• Encontrarás el icono en la barra de sistema\n"
+            "• Puedes comenzar a escribir en cualquier aplicación\n\n"
+            "Haz clic en 'Finalizar' para comenzar a usar DyslexiLess."
+        )
+        completion_text.setWordWrap(True)
+        layout.addWidget(completion_text)
+        
+        self.setLayout(layout)
+
+class MainWindow(QMainWindow):
+    """Ventana principal de la aplicación."""
+    
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("DyslexiLess")
+        self.setFixedSize(400, 300)
+        
+        # Cargar icono
+        icon_path = os.path.join("resources", "icon.png")
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
+        
+        # Widget central
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
-        main_layout = QVBoxLayout(central_widget)
+        layout = QVBoxLayout(central_widget)
         
-        # Título principal
-        header = QLabel("DyslexiLess")
-        header.setFont(QFont("Arial", 18, QFont.Weight.Bold))
-        header.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        main_layout.addWidget(header)
+        # Status
+        self.status_label = QLabel("Estado: Activo")
+        layout.addWidget(self.status_label)
         
-        # Subtítulo
-        subtitle = QLabel("Asistente de escritura en tiempo real para personas con dislexia")
-        subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        main_layout.addWidget(subtitle)
+        # Estadísticas
+        self.stats_label = QLabel("Correcciones: 0")
+        layout.addWidget(self.stats_label)
         
-        # Pestañas
-        self.tabs = QTabWidget()
+        # Botones
+        button_layout = QHBoxLayout()
         
-        # Pestaña de estado
-        self.status_widget = StatusWidget()
-        self.status_widget.toggle_button.clicked.connect(self.toggle_service)
-        self.tabs.addTab(self.status_widget, "Estado")
+        self.toggle_button = QPushButton("Pausar")
+        self.toggle_button.clicked.connect(self.toggle_service)
+        button_layout.addWidget(self.toggle_button)
         
-        # Pestaña de configuración
-        self.config_widget = ConfigWidget()
-        self.tabs.addTab(self.config_widget, "Configuración")
+        settings_button = QPushButton("Ajustes")
+        settings_button.clicked.connect(self.show_settings)
+        button_layout.addWidget(settings_button)
         
-        # Pestaña de ayuda
-        self.help_widget = HelpWidget()
-        self.tabs.addTab(self.help_widget, "Ayuda")
+        layout.addLayout(button_layout)
         
-        main_layout.addWidget(self.tabs)
+        # Ícono en la barra de sistema
+        self.setup_tray()
         
-        # Barra de estado
-        self.statusBar().showMessage("Listo")
+        # Iniciar servicio
+        self.start_service()
     
     def setup_tray(self):
-        """Configura el icono en la bandeja del sistema."""
+        """Configura el ícono en la barra de sistema."""
         self.tray_icon = QSystemTrayIcon(self)
         
-        # Usar un icono si existe, o crear uno por defecto
-        if os.path.exists(ICON_PATH):
-            self.tray_icon.setIcon(QIcon(ICON_PATH))
-        else:
-            # Usar un icono por defecto del sistema
-            self.tray_icon.setIcon(self.style().standardIcon(QApplication.style().StandardPixmap.SP_ComputerIcon))
+        # Usar el mismo ícono de la ventana
+        icon_path = os.path.join("resources", "icon.png")
+        if os.path.exists(icon_path):
+            self.tray_icon.setIcon(QIcon(icon_path))
         
-        # Menú contextual para el icono de la bandeja
+        # Menú contextual
         tray_menu = QMenu()
         
-        show_action = tray_menu.addAction("Mostrar")
-        show_action.triggered.connect(self.show)
-        
-        toggle_action = tray_menu.addAction("Iniciar/Detener Corrector")
+        toggle_action = tray_menu.addAction("Pausar")
         toggle_action.triggered.connect(self.toggle_service)
+        self.toggle_action = toggle_action
+        
+        settings_action = tray_menu.addAction("Ajustes")
+        settings_action.triggered.connect(self.show_settings)
         
         tray_menu.addSeparator()
         
         quit_action = tray_menu.addAction("Salir")
-        quit_action.triggered.connect(self.close_application)
+        quit_action.triggered.connect(self.quit_application)
         
         self.tray_icon.setContextMenu(tray_menu)
-        self.tray_icon.activated.connect(self.tray_icon_activated)
         self.tray_icon.show()
+        
+        # Mostrar la ventana al hacer doble clic
+        self.tray_icon.activated.connect(self.tray_icon_activated)
     
     def tray_icon_activated(self, reason):
-        """Maneja la activación del icono de la bandeja."""
+        """Maneja los clics en el ícono de la barra de sistema."""
         if reason == QSystemTrayIcon.ActivationReason.DoubleClick:
-            if self.isVisible():
-                self.hide()
-            else:
-                self.show()
-                self.activateWindow()
+            self.show()
+    
+    def start_service(self):
+        """Inicia el servicio de corrección."""
+        try:
+            self.correction_service = keyboardlistener.start_listener()
+            self.status_label.setText("Estado: Activo")
+            self.toggle_button.setText("Pausar")
+            self.toggle_action.setText("Pausar")
+            self.tray_icon.setToolTip("DyslexiLess: Activo")
+        except Exception as e:
+            logger.error(f"Error al iniciar el servicio: {e}")
+            QMessageBox.critical(
+                self,
+                "Error",
+                f"No se pudo iniciar el servicio:\n{str(e)}"
+            )
     
     def toggle_service(self):
-        """Inicia o detiene el servicio de corrección."""
-        if self.correction_service is None:
-            # Iniciar el servicio
-            try:
-                self.correction_service = keyboardlistener.start_listener()
-                self.status_widget.update_status(True, config_manager.load_config().get('service'))
-                self.statusBar().showMessage("Servicio de corrección iniciado")
-                
-                # Configurar un temporizador para actualizar las estadísticas
-                self.stats_timer = QTimer(self)
-                self.stats_timer.timeout.connect(self.update_stats)
-                self.stats_timer.start(5000)  # Actualizar cada 5 segundos
-            except Exception as e:
-                QMessageBox.critical(self, "Error", f"No se pudo iniciar el servicio: {e}")
+        """Alterna entre pausar/reanudar el servicio."""
+        if self.toggle_button.text() == "Pausar":
+            self.status_label.setText("Estado: Pausado")
+            self.toggle_button.setText("Reanudar")
+            self.toggle_action.setText("Reanudar")
+            self.tray_icon.setToolTip("DyslexiLess: Pausado")
         else:
-            # Detener el servicio
-            try:
-                # Aquí deberíamos tener un método para detener el listener
-                # Por ahora, simplemente establecemos la variable a None
-                self.correction_service = None
-                if hasattr(self, 'stats_timer'):
-                    self.stats_timer.stop()
-                self.status_widget.update_status(False)
-                self.statusBar().showMessage("Servicio de corrección detenido")
-            except Exception as e:
-                QMessageBox.critical(self, "Error", f"No se pudo detener el servicio: {e}")
+            self.status_label.setText("Estado: Activo")
+            self.toggle_button.setText("Pausar")
+            self.toggle_action.setText("Pausar")
+            self.tray_icon.setToolTip("DyslexiLess: Activo")
     
-    def update_stats(self):
-        """Actualiza las estadísticas mostradas."""
-        if self.correction_service:
-            # Aquí deberíamos obtener las estadísticas reales del servicio
-            # Por ahora, usamos valores de ejemplo
-            corrections = getattr(self.correction_service, 'corrections_count', 0)
-            words = getattr(self.correction_service, 'total_words', 0)
-            self.status_widget.update_stats(corrections, words)
+    def show_settings(self):
+        """Muestra la ventana de configuración."""
+        wizard = ConfigWizard(self)
+        if wizard.exec():
+            # Guardar configuración
+            config = {
+                "service": wizard.field("service"),
+                "api_key": wizard.field("api_key"),
+                "autostart": wizard.field("autostart"),
+                "notifications": wizard.field("notifications"),
+                "quiet_mode": wizard.field("quiet_mode"),
+                "aggressive": wizard.field("aggressive")
+            }
+            config_manager.save_config(config)
+            
+            # Reiniciar servicio
+            self.start_service()
+    
+    def quit_application(self):
+        """Cierra la aplicación."""
+        reply = QMessageBox.question(
+            self,
+            "Confirmar Salida",
+            "¿Estás seguro de que quieres cerrar DyslexiLess?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No
+        )
+        
+        if reply == QMessageBox.StandardButton.Yes:
+            QApplication.quit()
     
     def closeEvent(self, event):
-        """Maneja el evento de cierre de la ventana."""
+        """Maneja el evento de cierre de ventana."""
         event.ignore()
         self.hide()
-        self.tray_icon.showMessage(
-            "DyslexiLess sigue ejecutándose",
-            "La aplicación sigue ejecutándose en segundo plano. Haz clic en el icono para mostrarla de nuevo.",
-            QSystemTrayIcon.MessageIcon.Information,
-            3000
-        )
-    
-    def close_application(self):
-        """Cierra completamente la aplicación."""
-        if self.correction_service:
-            # Detener el servicio antes de cerrar
-            try:
-                # Aquí deberíamos tener un método para detener el listener
-                self.correction_service = None
-            except:
-                pass
-        
-        self.tray_icon.hide()
-        QApplication.quit()
 
 def main():
-    """Función principal que inicia la aplicación."""
+    """Función principal."""
     app = QApplication(sys.argv)
-    app.setQuitOnLastWindowClosed(False)  # Evitar que la aplicación se cierre al cerrar la ventana
     
+    # Estilo moderno
+    app.setStyle("Fusion")
+    
+    # Comprobar primera ejecución
+    if not config_manager.config_exists():
+        wizard = ConfigWizard()
+        if wizard.exec():
+            # Guardar configuración inicial
+            config = {
+                "service": wizard.field("service"),
+                "api_key": wizard.field("api_key"),
+                "autostart": wizard.field("autostart"),
+                "notifications": wizard.field("notifications"),
+                "quiet_mode": wizard.field("quiet_mode"),
+                "aggressive": wizard.field("aggressive")
+            }
+            config_manager.save_config(config)
+        else:
+            sys.exit(1)
+    
+    # Crear y mostrar ventana principal
     window = MainWindow()
     window.show()
     

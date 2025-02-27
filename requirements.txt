@@ -1,6 +1,51 @@
-PyQt6==6.6.1
-pynput==1.7.6
-httpx>=0.24.1,<1.0.0
-anthropic>=0.18.0
-openai>=1.10.0
-requests==2.31.0
+# Dependencias principales de DyslexiLess
+
+# Interfaz gráfica y monitoreo de teclado
+PyQt6>=6.4.0
+pynput>=1.7.6
+
+# APIs de IA y procesamiento de texto
+openai>=1.0.0
+anthropic>=0.5.0
+requests>=2.28.0
+aiohttp>=3.8.0
+
+# Seguridad y encriptación
+cryptography>=39.0.0
+python-jose>=3.3.0
+passlib>=1.7.4
+
+# Manejo de datos y caché
+redis>=4.5.0
+sqlalchemy>=2.0.0
+alembic>=1.9.0
+
+# Logging y monitoreo
+structlog>=22.3.0
+prometheus-client>=0.16.0
+psutil>=5.9.0
+
+# Generación de documentación
+jinja2>=3.1.0
+markdown2>=2.4.0
+
+# Testing
+pytest>=7.3.0
+pytest-cov>=4.0.0
+pytest-asyncio>=0.20.0
+pytest-mock>=3.10.0
+
+# Utilidades y mejoras de desarrollo
+python-dotenv>=0.21.0
+pydantic>=2.0.0
+typing-extensions>=4.5.0
+
+# Notificaciones multiplataforma
+win10toast>=0.9.0; platform_system == "Windows"
+pyobjc-framework-Cocoa>=9.0.0; platform_system == "Darwin"
+dbus-python>=1.2.18; platform_system == "Linux"
+
+# Dependencias opcionales para características avanzadas
+numpy>=1.24.0  # Procesamiento de datos
+pandas>=2.0.0  # Análisis de métricas
+matplotlib>=3.7.0  # Visualización de datos

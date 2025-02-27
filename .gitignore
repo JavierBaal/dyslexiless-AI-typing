@@ -1,0 +1,104 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Entornos virtuales
+venv/
+env/
+ENV/
+.env
+.venv
+env.bak/
+venv.bak/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.vs/
+
+# Configuración local
+config/local*.json
+*.local.json
+.env.local
+
+# Logs y datos
+*.log
+logs/
+data/
+test_data/
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Documentación generada
+docs/build/
+docs/_build/
+docs/api/
+site/
+
+# Caché y datos temporales
+.cache/
+.temp/
+temp/
+tmp/
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración sensibles
+*.key
+*.pem
+*.cert
+*.secret
+secrets/
+
+# Archivos de compilación
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.dll
+*.dylib
+
+# Archivos de performance y debug
+*.prof
+*.lprof
+*.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+
+# Archivos de distribución
+dist/
+build/
+*.tar.gz
+*.zip
+*.rar
+
+# Archivos específicos del proyecto
+test_reports/
+metrics/
+telemetry/
