@@ -99,3 +99,202 @@ Traceback (most recent call last):
   File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 69, in anthropic_correct
     message = self.claude.messages.create(
 AttributeError: 'Anthropic' object has no attribute 'messages'
+2025-02-27 01:16:05 - WARNING - Servicio desconocido: InvalidService, usando OpenAI como respaldo
+2025-02-27 01:16:05 - INFO - Probando conexión con el servicio: InvalidService
+2025-02-27 01:16:05 - INFO - Solicitando corrección a OpenAI para: prueba
+2025-02-27 01:16:06 - ERROR - Error en corrección OpenAI: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 137, in openai_correct
+    response = client.chat.completions.create(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 301, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/resources/chat/completions.py", line 598, in create
+    return self._post(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1096, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 856, in request
+    return self._request(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 908, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-02-27 01:16:06 - ERROR - Detalles del error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 137, in openai_correct
+    response = client.chat.completions.create(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 301, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/resources/chat/completions.py", line 598, in create
+    return self._post(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1096, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 856, in request
+    return self._request(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 908, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-02-27 01:16:06 - INFO - Prueba de conexión exitosa con InvalidService
+2025-02-27 01:16:06 - INFO - TextCorrector inicializado
+2025-02-27 01:16:06 - INFO - Corrección fallback: qe → que
+2025-02-27 01:16:06 - INFO - Corrección fallback: enpesar → empezar
+2025-02-27 01:16:06 - INFO - Corrección fallback: tanbien → también
+2025-02-27 01:16:06 - INFO - Corrección fallback: aser → hacer
+2025-02-27 01:16:06 - INFO - Corrección fallback: dise → dice
+2025-02-27 01:16:06 - INFO - Corrección fallback: kiero → quiero
+2025-02-27 01:16:06 - INFO - Corrección fallback: ablar → hablar
+2025-02-27 01:16:06 - INFO - Corrección fallback: oi → hoy
+2025-02-27 01:16:06 - INFO - Corrección fallback: mui → muy
+2025-02-27 01:16:06 - INFO - Corrección fallback: jente → gente
+2025-02-27 01:17:34 - WARNING - Servicio desconocido: InvalidService, usando OpenAI como respaldo
+2025-02-27 01:17:34 - INFO - Probando conexión con el servicio: InvalidService
+2025-02-27 01:17:34 - INFO - Solicitando corrección a OpenAI para: prueba
+2025-02-27 01:17:34 - ERROR - Error en corrección OpenAI: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 137, in openai_correct
+    response = client.chat.completions.create(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 301, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/resources/chat/completions.py", line 598, in create
+    return self._post(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1096, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 856, in request
+    return self._request(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 908, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-02-27 01:17:34 - ERROR - Detalles del error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 137, in openai_correct
+    response = client.chat.completions.create(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 301, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/resources/chat/completions.py", line 598, in create
+    return self._post(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1096, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 856, in request
+    return self._request(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 908, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-02-27 01:17:34 - INFO - Prueba de conexión exitosa con InvalidService
+2025-02-27 01:17:34 - INFO - TextCorrector inicializado
+2025-02-27 01:17:34 - INFO - Corrección encontrada en caché para: qe
+2025-02-27 01:17:34 - INFO - Corrección encontrada en caché para: enpesar
+2025-02-27 01:17:34 - INFO - Corrección encontrada en caché para: tanbien
+2025-02-27 01:17:34 - INFO - Corrección encontrada en caché para: aser
+2025-02-27 01:17:34 - INFO - Corrección encontrada en caché para: dise
+2025-02-27 01:17:34 - INFO - Corrección encontrada en caché para: kiero
+2025-02-27 01:17:34 - INFO - Corrección encontrada en caché para: ablar
+2025-02-27 01:17:34 - INFO - Corrección encontrada en caché para: oi
+2025-02-27 01:17:34 - INFO - Corrección encontrada en caché para: mui
+2025-02-27 01:17:34 - INFO - Corrección encontrada en caché para: jente
+2025-02-27 01:18:42 - WARNING - Servicio desconocido: InvalidService, usando OpenAI como respaldo
+2025-02-27 01:18:42 - INFO - Probando conexión con el servicio: InvalidService
+2025-02-27 01:18:42 - INFO - Solicitando corrección a OpenAI para: prueba
+2025-02-27 01:18:42 - ERROR - Error en corrección OpenAI: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 137, in openai_correct
+    response = client.chat.completions.create(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 301, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/resources/chat/completions.py", line 598, in create
+    return self._post(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1096, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 856, in request
+    return self._request(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 908, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-02-27 01:18:42 - ERROR - Detalles del error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 137, in openai_correct
+    response = client.chat.completions.create(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 301, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/resources/chat/completions.py", line 598, in create
+    return self._post(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1096, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 856, in request
+    return self._request(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 908, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-02-27 01:18:42 - INFO - Prueba de conexión exitosa con InvalidService
+2025-02-27 01:18:42 - INFO - TextCorrector inicializado
+2025-02-27 01:18:42 - INFO - Corrección encontrada en caché para: qe
+2025-02-27 01:18:42 - INFO - Corrección encontrada en caché para: enpesar
+2025-02-27 01:18:42 - INFO - Corrección encontrada en caché para: tanbien
+2025-02-27 01:18:42 - INFO - Corrección encontrada en caché para: aser
+2025-02-27 01:18:42 - INFO - Corrección encontrada en caché para: dise
+2025-02-27 01:19:16 - WARNING - Servicio desconocido: InvalidService, usando OpenAI como respaldo
+2025-02-27 01:19:16 - INFO - Probando conexión con el servicio: InvalidService
+2025-02-27 01:19:16 - INFO - Solicitando corrección a OpenAI para: prueba
+2025-02-27 01:19:16 - ERROR - Error en corrección OpenAI: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 137, in openai_correct
+    response = client.chat.completions.create(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 301, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/resources/chat/completions.py", line 598, in create
+    return self._post(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1096, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 856, in request
+    return self._request(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 908, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-02-27 01:19:16 - ERROR - Detalles del error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 137, in openai_correct
+    response = client.chat.completions.create(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 301, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/resources/chat/completions.py", line 598, in create
+    return self._post(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1096, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 856, in request
+    return self._request(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 908, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-02-27 01:19:16 - INFO - Prueba de conexión exitosa con InvalidService
+2025-02-27 01:19:16 - INFO - TextCorrector inicializado
+2025-02-27 01:19:16 - INFO - Iniciando KeyboardListener
+2025-02-27 01:19:16 - INFO - DyslexiLess iniciado y monitoreando
+2025-02-27 01:19:16 - INFO - Listener iniciado exitosamente
+2025-02-27 01:20:01 - INFO - Solicitando corrección a OpenAI para: extoy
+2025-02-27 01:20:02 - ERROR - Error en corrección OpenAI: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 137, in openai_correct
+    response = client.chat.completions.create(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 301, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/resources/chat/completions.py", line 598, in create
+    return self._post(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1096, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 856, in request
+    return self._request(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 908, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+2025-02-27 01:20:02 - ERROR - Detalles del error: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/text_corrector.py", line 137, in openai_correct
+    response = client.chat.completions.create(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 301, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/resources/chat/completions.py", line 598, in create
+    return self._post(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1096, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 856, in request
+    return self._request(
+  File "/Users/vanguardhive/Desktop/TRABAJOS/SALA-CREATIVA/dyslexiless-AI-typing/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 908, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: invalid_key. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}

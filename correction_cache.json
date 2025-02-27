@@ -1,0 +1,62 @@
+{
+  "qe": {
+    "correction": "que",
+    "was_corrected": true,
+    "context": "Creo qe esto funciona",
+    "timestamp": "2025-02-27T01:16:06.343304"
+  },
+  "enpesar": {
+    "correction": "empezar",
+    "was_corrected": true,
+    "context": "Vamos a enpesar el proyecto",
+    "timestamp": "2025-02-27T01:16:06.343938"
+  },
+  "tanbien": {
+    "correction": "también",
+    "was_corrected": true,
+    "context": "Yo tanbien quiero ir",
+    "timestamp": "2025-02-27T01:16:06.344389"
+  },
+  "aser": {
+    "correction": "hacer",
+    "was_corrected": true,
+    "context": "Voy a aser la tarea",
+    "timestamp": "2025-02-27T01:16:06.344761"
+  },
+  "dise": {
+    "correction": "dice",
+    "was_corrected": true,
+    "context": "El dise que vendrá mañana",
+    "timestamp": "2025-02-27T01:16:06.345136"
+  },
+  "kiero": {
+    "correction": "quiero",
+    "was_corrected": true,
+    "context": "Yo kiero un helado",
+    "timestamp": "2025-02-27T01:16:06.345545"
+  },
+  "ablar": {
+    "correction": "hablar",
+    "was_corrected": true,
+    "context": "Vamos a ablar con él",
+    "timestamp": "2025-02-27T01:16:06.348765"
+  },
+  "oi": {
+    "correction": "hoy",
+    "was_corrected": true,
+    "context": "Oi es un buen día",
+    "timestamp": "2025-02-27T01:16:06.349701"
+  },
+  "mui": {
+    "correction": "muy",
+    "was_corrected": true,
+    "context": "Está mui lejos",
+    "timestamp": "2025-02-27T01:16:06.350590"
+  },
+  "jente": {
+    "correction": "gente",
+    "was_corrected": true,
+    "context": "Hay mucha jente aquí",
+    "timestamp": "2025-02-27T01:16:06.354656"
+  }
+}

@@ -42,37 +42,86 @@ requests==2.31.0
 pip install -r requirements.txt
 ```
 
-### Ejecutar Pruebas
+### Scripts Disponibles
 
-Para probar el corrector con OpenAI:
+Se han creado varios scripts para facilitar las pruebas y el uso de la aplicación:
 
-```bash
-python test_corrector.py OpenAI tu_clave_api_openai
-```
+1. **run_app.py** - Script principal para ejecutar la aplicación con instrucciones claras:
+   ```bash
+   python run_app.py
+   ```
+   Este script verifica las dependencias, muestra instrucciones y ejecuta la aplicación principal.
 
-Para probar el corrector con Anthropic:
+2. **test_fallback.py** - Script simplificado para probar el corrector fallback sin necesidad de API keys:
+   ```bash
+   python test_fallback.py
+   ```
+   Este script prueba el corrector fallback con palabras comunes con errores de dislexia.
 
-```bash
-python test_corrector.py Anthropic tu_clave_api_anthropic
-```
+3. **test_corrector.py** - Script avanzado para probar diferentes servicios de IA:
+   ```bash
+   # Sin argumentos (usa el corrector fallback)
+   python test_corrector.py
+   
+   # Con OpenAI
+   python test_corrector.py OpenAI tu_clave_api_openai
+   
+   # Con Anthropic
+   python test_corrector.py Anthropic tu_clave_api_anthropic
+   
+   # Con Mixtral
+   python test_corrector.py Mixtral tu_clave_api_mixtral
+   
+   # Forzar uso del corrector fallback
+   python test_corrector.py Fallback
+   ```
 
-Para probar el corrector con Mixtral:
+### Ejecutar la Aplicación Directamente
 
-```bash
-python test_corrector.py Mixtral tu_clave_api_mixtral
-```
-
-Para probar el corrector fallback sin conexión:
-
-```bash
-python test_corrector.py Fallback cualquier_valor
-```
-
-### Ejecutar la Aplicación
+Si prefiere ejecutar la aplicación directamente sin usar los scripts de ayuda:
 
 ```bash
 python main.py
 ```
+
+## Nueva Interfaz Gráfica para Usuarios No Técnicos
+
+Se ha desarrollado una nueva interfaz gráfica mejorada para usuarios no técnicos. Esta interfaz es más intuitiva y fácil de usar, y proporciona:
+
+- **Interfaz con pestañas**: Estado, Configuración y Ayuda
+- **Panel de estado**: Muestra el estado actual del corrector y estadísticas
+- **Configuración simplificada**: Selección de servicio con descripciones claras
+- **Ayuda integrada**: Instrucciones detalladas y preguntas frecuentes
+- **Icono en la bandeja del sistema**: Permite minimizar la aplicación a la bandeja
+- **Notificaciones**: Proporciona retroalimentación visual sobre las correcciones
+
+### Script de Instalación
+
+Se ha creado un script de instalación que simplifica el proceso de configuración:
+
+```bash
+# Ejecutar el script de instalación
+python install.py
+```
+
+Este script:
+- Verifica la versión de Python
+- Instala todas las dependencias necesarias
+- Crea recursos (iconos, etc.)
+- Ofrece crear un acceso directo en el escritorio
+- Ofrece configurar el inicio automático con el sistema
+- Inicia la aplicación al finalizar (opcional)
+
+### Ejecutable Independiente
+
+Ahora puedes crear un ejecutable independiente que se puede iniciar con doble clic, sin necesidad de usar la terminal:
+
+```bash
+# Generar el ejecutable
+python build_app.py
+```
+
+El ejecutable se creará en la carpeta `dist` y se puede iniciar con doble clic. El script `build_app.py` instalará PyInstaller automáticamente si no está instalado.
 
 ## Solución de Problemas
 
@@ -82,9 +131,17 @@ Si encuentras problemas con alguna de las integraciones de API, verifica lo sigu
 2. **Versiones de Bibliotecas**: Verifica que estás usando las versiones correctas de las bibliotecas
 3. **Registros**: Revisa los archivos de registro en el directorio `logs` para obtener información detallada sobre errores
 
+### Problemas con el Ejecutable
+
+Si tienes problemas con el ejecutable:
+
+1. **Permisos**: Asegúrate de que el ejecutable tiene permisos de ejecución
+2. **Antivirus**: Algunos antivirus pueden bloquear el ejecutable. Añade una excepción si es necesario
+3. **Dependencias**: El ejecutable incluye todas las dependencias necesarias, pero en algunos sistemas puede ser necesario instalar algunas bibliotecas adicionales
+
 ## Próximos Pasos
 
-Estas actualizaciones abordan los problemas críticos identificados en la Fase 1 del plan de implementación. Las siguientes fases incluirán:
+Estas actualizaciones abordan los problemas críticos identificados en la Fase 1 del plan de implementación y añaden mejoras significativas para la experiencia de usuario. Las siguientes fases incluirán:
 
 - Fase 2: Consolidación de código y mejora de la modularidad
 - Fase 3: Implementación de pruebas automatizadas y mejora de la documentación

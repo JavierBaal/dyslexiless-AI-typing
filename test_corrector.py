@@ -6,8 +6,16 @@ Este script prueba la integración con diferentes servicios de IA.
 
 import sys
 import time
+import os
 from text_corrector import TextCorrector
 from logger_manager import logger
+
+# Asegurarse de que la salida se muestre inmediatamente (sin buffering)
+sys.stdout.reconfigure(line_buffering=True)
+
+print("Iniciando script de prueba para DyslexiLess...")
+print(f"Directorio actual: {os.getcwd()}")
+print("Importando módulos necesarios...")
 
 def test_service(service_name, api_key):
     """Prueba un servicio específico de corrección."""
@@ -64,22 +72,46 @@ def main():
     print("=== Prueba de Corrector de Texto DyslexiLess ===")
     
     # Verificar argumentos
-    if len(sys.argv) < 3:
-        print("Uso: python test_corrector.py <servicio> <api_key>")
+    if len(sys.argv) < 2:
+        print("No se proporcionaron argumentos. Ejecutando prueba con el corrector fallback...")
+        print("Para probar otros servicios: python test_corrector.py <servicio> <api_key>")
         print("Servicios disponibles: OpenAI, Anthropic, Mixtral, Fallback")
+        
+        # Ejecutar prueba con el corrector fallback por defecto
+        test_service("InvalidService", "invalid_key")
+        print("\n=== Prueba completada ===")
         return
     
+    # Si se proporcionaron argumentos, usarlos
     service = sys.argv[1]
-    api_key = sys.argv[2]
     
-    # Probar el servicio especificado
     if service.lower() == "fallback":
         # Para el servicio fallback, usamos una clave API inválida para forzar el uso del fallback
         test_service("InvalidService", "invalid_key")
     else:
+        # Verificar que se proporcionó una clave API
+        if len(sys.argv) < 3:
+            print(f"Error: Se requiere una clave API para el servicio {service}")
+            print(f"Uso: python test_corrector.py {service} <api_key>")
+            return
+            
+        api_key = sys.argv[2]
         test_service(service, api_key)
     
     print("\n=== Prueba completada ===")
 
 if __name__ == "__main__":
-    main()
+    try:
+        print("Ejecutando prueba de corrector de texto...")
+        main()
+    except KeyboardInterrupt:
+        print("\nPrueba interrumpida por el usuario.")
+    except Exception as e:
+        print(f"\n❌ Error durante la ejecución de la prueba: {e}")
+        import traceback
+        print("\nDetalles del error:")
+        traceback.print_exc()
+        print("\nSugerencia: Verifique que todas las dependencias estén instaladas correctamente.")
+        print("Ejecute: pip install -r requirements.txt")
+    finally:
+        print("\nFin del script de prueba.")
