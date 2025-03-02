@@ -4,7 +4,7 @@
 mkdir -p temp_package
 
 # Copiar solo los archivos necesarios
-cp improved_gui.py temp_package/
+cp main.py temp_package/
 cp text_corrector.py temp_package/
 cp config_manager.py temp_package/
 cp keyboardlistener.py temp_package/
